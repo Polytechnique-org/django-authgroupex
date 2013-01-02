@@ -32,7 +32,7 @@ setup(
     author_email="raphael.barrois@polytechnique.org",
     description="An authentication backend for Django based on Polytechnique.org's auth-groupe-x SSO protocol.",
     license="BSD",
-    keywords=['project', 'library', 'template'],
+    keywords=['sso', 'authentication', 'django', 'authgroupex'],
     url="http://github.com/rbarrois/django-authgroupex",
     download_url="http://pypi.python.org/pypi/django-authgroupex/",
     packages=['django_authgroupex'],
