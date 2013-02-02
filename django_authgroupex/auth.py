@@ -197,7 +197,7 @@ class AuthGroupeXBackend(object):
         if auth_data.email:
             user.email = auth_data.email
 
-        if self.config.PROFILE_CLASS:
+        if getattr(self.config, 'PROFILE_CLASS', ''):
             profile_model = get_model(self.config.PROFILE_CLASS)
             try:
                 profile = user.get_profile()
