@@ -120,6 +120,7 @@ class AuthGroupeXBaseView(object):
 
     def login_begin_view(self, request, next=None):
         """View initiating the authgroupex authentication."""
+        next = next or request.GET.get('next')
         auth_url = self.build_return_url(request, next)
         return http.HttpResponseRedirect(auth_url)
 
