@@ -58,6 +58,13 @@ class AuthResult(object):
         self.data = data
         self.perms = self._setup_perms(self.data)
 
+    def __repr__(self):
+        return '<AuthResult: %s [%s / %s]>' % (
+            'OK' if self.success else 'KO',
+            self.data,
+            self.perms,
+        )
+
     def _setup_perms(self, data):
         perms = set()
         perms.add(PERM_USER)
@@ -71,6 +78,7 @@ class AuthResult(object):
                 perms.add(PERM_GROUP_MEMBER)
             elif self._data['grpauth'] == 'membre':
                 perms.add(PERM_GROUP_MEMBER)
+        return perms
 
     @property
     def username(self):
