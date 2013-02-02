@@ -36,7 +36,7 @@ def get_model(model_name):
     - Explicit models.Model subclass
     - Absolute dotted path to import the model
     """
-    if issubclass(model_name, models.Model):
+    if isinstance(model_name, type) and issubclass(models.Model, model_name):
         return model_name
 
     # Not a Model or a Model instance, must be a class path
