@@ -208,15 +208,17 @@ class AuthGroupeXBackend(object):
             profile.save()
 
     def update_perms(self, user, auth_data):
-        # Handle superadmins
-        if self.config.SUPERADMIN_PERMS:
-            user.is_superuser = any(auth_data.has_perm(perm)
-                                    for perm in self.config.SUPERADMIN_PERMS)
-
         # Handle staff status
         if self.config.STAFF_PERMS:
             user.is_staff = any(auth_data.has_perm(perm)
                                     for perm in self.config.STAFF_PERMS)
+
+        # Handle superadmins
+        if self.config.SUPERADMIN_PERMS:
+            user.is_superuser = any(auth_data.has_perm(perm)
+                                    for perm in self.config.SUPERADMIN_PERMS)
+            if user.is_superuser:
+                user.is_staff = True
 
         # Handle active status
         if auth_data.is_dead and self.config.DISABLE_DEADS:
