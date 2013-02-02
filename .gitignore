@@ -3,6 +3,10 @@
 *.pyc
 *.pyo
 
+# Dev-related files
+dev/db.sqlite
+dev/private/
+
 # Build-related files
 doc/_build/
 .coverage

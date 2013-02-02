@@ -1,0 +1,15 @@
+{% extends "admin/login.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block content %}
+<div id="content-main">
+<form action="{% url 'xorgauth' %}" method="get">
+  <input type="hidden" name="next" value="{{ next }}" />
+  <p>{% trans "Connect with your X.org credentials" %}</p>
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}" />
+  </div>
+</form>
+</div>
+{% endblock %}
