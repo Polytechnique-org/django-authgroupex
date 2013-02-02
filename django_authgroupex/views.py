@@ -36,7 +36,7 @@ class URLFormatter(object):
             the new url.
         """
         challenge = hashlib.sha1(
-                ''.join(chr(random.randrange(0, 256)) for i in xrange(64)))
+                b''.join(chr(random.randrange(0, 256)) for i in range(64)))
         challenge = challenge.hexdigest()
 
         request.session['authgroupex-challenge'] = challenge
