@@ -5,7 +5,7 @@
 
 """Provide a AuthGroupeX authentication backend for Django."""
 
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import
 
 
 from .auth import AuthGroupeXBackend
