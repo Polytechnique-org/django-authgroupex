@@ -48,6 +48,11 @@ class AuthGroupeXConf(appconf.AppConf):
     # Group to store groups to
     GROUP_MODEL = 'auth.Group'
 
+    # Whether to enable debug
+    FAKE = False
+    def configure_fake(self, value):
+        return value or settings.DEBUG
+
     class Meta:
         prefix = 'authgroupex'
         # Forward setting lookups to base django.conf.settings

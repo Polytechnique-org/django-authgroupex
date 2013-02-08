@@ -79,6 +79,8 @@ AUTHENTICATION_BACKENDS = (
 AUTHGROUPEX_KEY = read_pass('authgroupex.key')
 AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'perms')
 AUTHGROUPEX_SUPERADMIN_PERMS = ('admin',)
+AUTHGROUPEX_FAKE = True
+AUTHGROUPEX_ENDPOINT = 'authgroupex:fake_endpoint'
 LOGIN_URL = '/xorgauth/'
 LOGIN_REDIRECT_URL = '/'
 

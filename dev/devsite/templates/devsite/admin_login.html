@@ -4,7 +4,7 @@
 
 {% block content %}
 <div id="content-main">
-<form action="{% url 'xorgauth' %}" method="get">
+<form action="{% url 'authgroupex:login' %}" method="get">
   <input type="hidden" name="next" value="{{ next }}" />
   <p>{% trans "Connect with your X.org credentials" %}</p>
   <div class="submit-row">

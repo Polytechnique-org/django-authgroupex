@@ -10,6 +10,7 @@ import random
 
 from django import http
 from django.contrib import auth as django_auth
+from django.core.urlresolvers import reverse
 
 from . import auth
 from . import conf
@@ -47,7 +48,11 @@ class URLFormatter(object):
         query['pass'] = sig
         query['url'] = request.build_absolute_uri(return_url)
 
-        url = self.config.ENDPOINT + '?' + query.urlencode()
+        endpoint = self.config.ENDPOINT
+        if self.config.FAKE:
+            endpoint = reverse(endpoint)
+
+        url = endpoint + '?' + query.urlencode()
         return url
 
     def parse_return(self, request):

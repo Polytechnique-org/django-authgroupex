@@ -7,6 +7,6 @@
     <p><a href="{% url 'logout' %}">Log out </a></p>
 {% else %}
     <h3>Authenticate</h3>
-        <p><a href="{% url 'xorgauth' %}?next=/" />Connect through X.org</a></p>
+        <p><a href="{% url 'authgroupex:login' %}?next=/" />Connect through X.org</a></p>
 {% endif %}
 {% endblock %}
