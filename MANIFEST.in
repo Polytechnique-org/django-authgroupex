@@ -1,4 +1,7 @@
-include README
+include README LICENSE *.txt *.rst
+recursive-include django_authgroupex *.html
+recursive-include dev *.py *.css *.html
+
 include doc/Makefile doc/make.bat
 recursive-include doc *.py *.rst
 include doc/_static/.keep_dir

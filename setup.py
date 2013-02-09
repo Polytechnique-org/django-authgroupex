@@ -35,7 +35,8 @@ setup(
     keywords=['sso', 'authentication', 'django', 'authgroupex'],
     url="http://github.com/rbarrois/django-authgroupex",
     download_url="http://pypi.python.org/pypi/django-authgroupex/",
-    packages=['django_authgroupex'],
+    packages=['django_authgroupex', 'django_authgroupex.fake'],
+    include_package_data=True,
     setup_requires=[
         'distribute',
     ],
@@ -45,6 +46,7 @@ setup(
     ],
     classifiers=[
         "Development Status :: 4 - Beta",
+        "Framework :: Django",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Topic :: Software Development :: Libraries :: Python Modules",
