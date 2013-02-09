@@ -25,12 +25,9 @@ It should also be included in your projects ``urls.py`` file:
 
 .. code-block:: python
 
-    import django_authgroupex
-
-    authgroupex_view = django_authgroupex.AuthGroupeXUniqueView()
     urlpatterns = patterns('',
         # Usual suspects here
-        url(r'^xorgauth/', authgroupex_view.login_view, name='xorgauth'),
+        url(r'^xorgauth/', include('django_authgroupex.views', namespace='authgroupex')),
     )
 
 If you're using the ``django.contrib.admin`` app, you may also override its login form:

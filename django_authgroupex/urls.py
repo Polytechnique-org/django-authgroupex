@@ -9,9 +9,9 @@ urlpatterns = patterns('',
 )
 
 
-_config = conf.AuthGroupeXConf()
+config = conf.AuthGroupeXConf()
 
-if _config.FAKE:
+if config.FAKE:
     urlpatterns += patterns('django_authgroupex.fake.views',
         url(r'^fake/validate/$', 'endpoint', name='fake_endpoint'),
         url(r'^fake/fill/$', 'login_view', name='fake_fill'),
