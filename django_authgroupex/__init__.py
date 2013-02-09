@@ -14,4 +14,4 @@ from .exceptions import AuthGroupeXError, InvalidAuth
 from .views import AuthGroupeXBaseView, AuthGroupeXUniqueView
 
 __author__ = u"Raphaël Barrois <raphael.barrois@polytechnique.org>"
-__version__ = '0.1.0'
+__version__ = '0.2.0'
