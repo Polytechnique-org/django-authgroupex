@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 # Use authgroupex login on admin site
-admin.site.login_template = 'devsite/admin_login.html'
+admin.site.login_template = 'authgroupex/admin_login.html'
 
 urlpatterns = patterns('',
     url(r'^$', 'dev.devsite.views.home', name='home'),

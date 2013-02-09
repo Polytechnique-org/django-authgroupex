@@ -38,7 +38,7 @@ If you're using the ``django.contrib.admin`` app, you may also override its logi
 .. code-block:: python
 
     from django.contrib import admin
-    admin.site.login = authgroupex_view.login_view
+    admin.site.login_template = 'authgroupex/admin_login.html'
 
 
 Settings
