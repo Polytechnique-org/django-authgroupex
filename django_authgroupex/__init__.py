@@ -13,5 +13,5 @@ from .auth import PERM_ADMIN, PERM_GROUP_ADMIN, PERM_GROUP_MEMBER, PERM_USER
 from .exceptions import AuthGroupeXError, InvalidAuth
 from .views import AuthGroupeXBaseView, AuthGroupeXUniqueView
 
-__author__ = u"Raphaël Barrois <raphael.barrois@polytechnique.org>"
-__version__ = '0.2.0'
+__author__ = u"Raphaël Barrois <raphael.barrois+djauthgroupex@polytechnique.org>"
+__version__ = '0.2.1'
