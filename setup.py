@@ -79,8 +79,14 @@ setup(
     download_url='http://pypi.python.org/pypi/django-authgroupex/',
     keywords=['sso', 'authentication', 'django', 'authgroupex'],
     packages=['django_authgroupex', 'django_authgroupex.fake'],
+    package_data={
+        'django_authgroupex': [
+            os.path.join('templates', 'authgroupex', '*.html'),
+            os.path.join('static', 'authgroupex', '*.js'),
+            os.path.join('static', 'authgroupex', '*.css'),
+        ],
+    },
     license='BSD',
-    include_package_data=True,
     requires=[
         'Django',
         'django_appconf',
