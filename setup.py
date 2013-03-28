@@ -81,9 +81,9 @@ setup(
     packages=['django_authgroupex', 'django_authgroupex.fake'],
     license='BSD',
     include_package_data=True,
-    install_requires=[
+    requires=[
         'Django',
-        'django-appconf',
+        'django_appconf',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
