@@ -1,4 +1,4 @@
-include README LICENSE *.txt *.rst
+include README.rst LICENSE *.txt *.rst
 recursive-include django_authgroupex *.html
 recursive-include dev *.py *.css *.html
 
