@@ -91,9 +91,14 @@ class URLFormatter(object):
         return auth.AuthResult(success=True, data=data)
 
 
-# /foobar/ => login_required => LOGIN_URL?next=/foobar/ => login_view
-# => X.org?...&url=AUTHGROUPEX_RETURN?url=LOGIN_URL?next=/foobar/
-# => AUTHGROUPEX_RETURN?url=LOGIN_URL?next=/foobar/ => LOGIN_URL?next=/foobar/
+# Expected behaviour:
+# 1) User goes to /foobar/
+# 2) The view for /foobar/ has a @login_required decorator
+# 3) @login_required redirects to <LOGIN_URL>?next=/foobar/
+# 4) (optionnally) the user clicks on a link that brings him to AuthGroupeXBaseView.login_begin_view with ?next=/foobar/
+# 5) AuthGroupeXBaseView.login_begin_view redirects to https://x.org/...&url=AuthGroupeXBaseView.login_return_view?next=/foobar/
+# 6) X.org authenticates and redirects to AuthGroupeXBaseView.login_return_view?user=..&next=/foobar/
+# 7) AuthGroupeXBaseView.login_return_view sends to /foobar/
 
 
 class AuthGroupeXBaseView(object):
@@ -112,13 +117,13 @@ class AuthGroupeXBaseView(object):
     # pylint: disable=W0622
     def build_return_url(self, request, next=None):
         """Builds the return URL for a request."""
-        url = self.config.LOGIN_URL
+        url = self.config.RETURN_URL
         query = http.QueryDict('', mutable=True)
         if next:
             query['next'] = next
 
         if self.include_return_param:
-            query['auth_groupex_return'] = 1
+            query['auth_groupex_return'] = '1'
 
         url += '?' + query.urlencode()
         return self.url_formatter.make_url(request, url)
@@ -161,7 +166,7 @@ class AuthGroupeXUniqueView(AuthGroupeXBaseView):
     # pylint: disable=W0622
     def login_view(self, request, next=None):
         """View dispatching the request to the adequate processing view."""
-        if 'auth_groupex_return' in request.GET:
+        if request.GET.get('auth_groupex_return') == '1':
             return self.login_return_view(request)
         else:
             return self.login_begin_view(request, next)
