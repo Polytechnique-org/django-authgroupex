@@ -1,3 +1,14 @@
+v0.3.0 (2013-11-22)
+-------------------
+
+*Bugfix:*
+
+    * Properly use ``AUTHGROUPEX_RETURN_URL`` when building the return URL
+
+*New:*
+
+    * Add compatibility with Django custom User model.
+
 v0.2.1 (2013-03-29)
 -------------------
 
