@@ -7,6 +7,7 @@ from __future__ import absolute_import, unicode_literals
 
 import logging
 
+from django.core import exceptions
 from django.db import models
 
 
@@ -112,30 +113,13 @@ class AuthResult(object):
         return perm in self.perms
 
 
-class AuthGroupeXBackend(object):
-    """Authentication backend for auth-groupe-x"""
-
-    supports_anonymous_user = False
-    supports_object_permissions = False
-
+class AuthGroupeXMixin(object):
     def __init__(self, config=None, *args, **kwargs):
-        super(AuthGroupeXBackend, self).__init__(*args, **kwargs)
+        super(AuthGroupeXMixin, self).__init__(*args, **kwargs)
         self.config = config or conf.AuthGroupeXConf()
-        self.user_model = get_model(self.config.USER_MODEL)
 
-    def get_user(self, user_id):
-        """Retrieve a user by ID.
-
-        Args:
-            user_id: int, the ID of the user
-
-        Returns:
-            Either an instance of self.config.USER_MODEL or None
-        """
-        try:
-            return self.user_model.objects.get(pk=user_id)
-        except self.user_model.DoesNotExist:
-            return None
+    # Public API
+    # ==========
 
     def authenticate(self, **kwargs):
         """Create a user if the authgroupex data has been passed.
@@ -153,41 +137,128 @@ class AuthGroupeXBackend(object):
             return None
 
         try:
-            user = self.user_model.objects.get(username=auth_data.username)
-        except self.user_model.DoesNotExist:
+            user = self._fetch_user(auth_data.username)
+        except exceptions.ObjectDoesNotExist:
             try:
-                user = self.create_user_from_auth_data(auth_data)
+                user = self._create_user_from_auth_data(auth_data)
             except ValueError:
                 logger.warning('Received authgroupex with invalid name %s',
                         auth_data.username)
                 return None
 
-        self.update_user(user, auth_data)
+        self._update_user(user, auth_data)
         return user
 
-    def create_user_from_auth_data(self, auth_data):
+    # Required extension points
+    # =========================
+
+    def get_user(self, user_id):
+        raise NotImplementedError()
+
+    def _fetch_user(self, username):
+        raise NotImplementedError()
+
+    def _create_user(self, username):
+        raise NotImplementedError()
+
+    # Optional extension points
+    # =========================
+
+    def _set_staff(self, user, is_staff):
+        if hasattr(user, 'is_staff'):
+            user.is_staff = is_staff
+
+    def _set_superuser(self, user, is_superuser):
+        if hasattr(user, 'is_superuser'):
+            user.is_superuser = is_superuser
+
+    def _set_active(self, user, is_active):
+        if hasattr(user, 'is_active'):
+            user.is_active = is_active
+
+    def _update_profile(self, user, auth_data):
+        """Update fields of the profile according to auth-groupe-x data."""
+        pass
+
+    def _update_groups(self, user, auth_data):
+        pass
+
+    # Internals
+    # =========
+
+    def _update_perms(self, user, auth_data):
+        # Handle staff status
+        if self.config.STAFF_PERMS:
+            self._set_staff(user, any(
+                auth_data.has_perm(perm) for perm in self.config.STAFF_PERMS))
+
+        # Handle superadmins
+        if self.config.SUPERADMIN_PERMS:
+            is_superuser = any(
+                auth_data.has_perm(perm) for perm in self.config.SUPERADMIN_PERMS)
+
+            self._set_superuser(user, is_superuser)
+            if is_superuser:
+                self._set_staff(user, True)
+
+        # Handle active status
+        if auth_data.is_dead and self.config.DISABLE_DEADS:
+            self._set_active(user, False)
+
+    def _update_user(self, user, auth_data):
+        """Update various fields of the user according to auth-groupe-x data."""
+        self._update_profile(user, auth_data)
+        self._update_perms(user, auth_data)
+        self._update_groups(user, auth_data)
+
+        # Refresh DB user
+        user.save()
+        logger.info('Updated user {name}', name=user.get_username())
+
+    def _create_user_from_auth_data(self, auth_data):
         """Create a new Django user from AuthGroupeX data.
 
         This only sets the basic username field;
         groups and other data are handled by the update_user method.
         """
         username = auth_data.username
-        user = self.user_model.objects.create(username=username, is_active=True)
+        user = self._create_user(username)
         user.set_unusable_password()
         logger.info('Created a new user with username {name}', name=username)
         return user
 
-    def update_user(self, user, auth_data):
-        """Update various fields of the user according to auth-groupe-x data."""
-        self.update_profile(user, auth_data)
-        self.update_perms(user, auth_data)
-        self.update_groups(user, auth_data)
 
-        # Refresh DB user
-        user.save()
-        logger.info('Updated user {name}', name=user.username)
+class AuthGroupeXBackend(AuthGroupeXMixin):
+    """Authentication backend for auth-groupe-x"""
 
-    def update_profile(self, user, auth_data):
+    supports_anonymous_user = False
+    supports_object_permissions = False
+
+    def __init__(self, config=None, *args, **kwargs):
+        super(AuthGroupeXBackend, self).__init__(*args, **kwargs)
+        self.user_model = get_model(self.config.USER_MODEL)
+
+    def get_user(self, user_id):
+        """Retrieve a user by ID.
+
+        Args:
+            user_id: int, the ID of the user
+
+        Returns:
+            Either an instance of self.config.USER_MODEL or None
+        """
+        try:
+            return self.user_model.objects.get(pk=user_id)
+        except self.user_model.DoesNotExist:
+            return None
+
+    def _fetch_user(self, username):
+        return self.user_model.objects.get(username=username)
+
+    def _create_user(self, username):
+        return self.user_model.objects.create(username=username, is_active=True)
+
+    def _update_profile(self, user, auth_data):
         """Update fields of the profile according to auth-groupe-x data."""
         # Update basic profile data
         if auth_data.firstname:
@@ -207,25 +278,7 @@ class AuthGroupeXBackend(object):
                 profile.promo = auth_data.promo
             profile.save()
 
-    def update_perms(self, user, auth_data):
-        # Handle staff status
-        if self.config.STAFF_PERMS:
-            user.is_staff = any(auth_data.has_perm(perm)
-                                    for perm in self.config.STAFF_PERMS)
-
-        # Handle superadmins
-        if self.config.SUPERADMIN_PERMS:
-            user.is_superuser = any(auth_data.has_perm(perm)
-                                    for perm in self.config.SUPERADMIN_PERMS)
-            if user.is_superuser:
-                user.is_staff = True
-
-        # Handle active status
-        if auth_data.is_dead and self.config.DISABLE_DEADS:
-            user.is_active = False
-
-
-    def update_groups(self, user, auth_data):
+    def _update_groups(self, user, auth_data):
         if not self.config.MAP_GROUPS:
             return
 
