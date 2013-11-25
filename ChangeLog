@@ -1,3 +1,10 @@
+v0.3.1 (2013-11-25)
+-------------------
+
+*Bugfix:*
+
+    * Fix bad string interpolation in logging calls
+
 v0.3.0 (2013-11-22)
 -------------------
 
