@@ -1,3 +1,10 @@
+v0.3.2 (2013-11-25)
+-------------------
+
+*Bugfix:*
+
+    * Properly use ``AUTHGROUPEX_LOGIN_REDIRECT_URL``.
+
 v0.3.1 (2013-11-25)
 -------------------
 
