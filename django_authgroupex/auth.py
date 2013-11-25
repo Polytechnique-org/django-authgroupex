@@ -213,7 +213,7 @@ class AuthGroupeXMixin(object):
 
         # Refresh DB user
         user.save()
-        logger.info('Updated user {name}', name=user.get_username())
+        logger.info('Updated user %s', user.get_username())
 
     def _create_user_from_auth_data(self, auth_data):
         """Create a new Django user from AuthGroupeX data.
@@ -224,7 +224,7 @@ class AuthGroupeXMixin(object):
         username = auth_data.username
         user = self._create_user(username)
         user.set_unusable_password()
-        logger.info('Created a new user with username {name}', name=username)
+        logger.info('Created a new user with username %s', username)
         return user
 
 
