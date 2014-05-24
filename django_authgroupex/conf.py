@@ -52,7 +52,7 @@ class AuthGroupeXConf(appconf.AppConf):
 
     # Model to store users to
     USER_MODEL = ''
-    def config_user_model(self, value):
+    def configure_user_model(self, value):
         return value or getattr(settings, 'AUTH_USER_MODEL', '') or 'auth.User'
 
     # Group to store groups to

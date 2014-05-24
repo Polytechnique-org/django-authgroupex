@@ -96,7 +96,7 @@ These (remote) permissions can be mapped to Django access rights through the fol
   Default: ``False``
 * ``AUTHGROUPEX_GROUP``: Name of the AuthGroupeX group to use for a single-group website.
   Default: ``''``
-* ``AUTHGROUPEX_MAP_GROUPS``: Dict mapping an AuthGroupeX permission to a local group name.
+* ``AUTHGROUPEX_MAP_GROUPS``: Dict mapping an AuthGroupeX permission to a list of local group names.
   Default: ``{}``
 
 
