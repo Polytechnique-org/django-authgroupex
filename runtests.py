@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import sys
 
 import django
@@ -27,7 +28,7 @@ from django.test.utils import get_runner
 def runtests():
     if hasattr(django, 'setup'):
         django.setup()
-    apps = sys.argv[1:] or ['django_authgroupex', ]
+    apps = ['django_authgroupex', ]
     TestRunner = get_runner(settings)
     test_runner = TestRunner(verbosity=1, interactive=True, failfast=False)
     failures = test_runner.run_tests(apps)
