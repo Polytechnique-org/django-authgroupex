@@ -15,6 +15,10 @@ if not settings.configured:
             }
         },
         INSTALLED_APPS=(
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.sites',
             'django_authgroupex',
         ),
         SITE_ID=1,
