@@ -1,6 +1,6 @@
 include README.rst LICENSE *.txt *.rst
 recursive-include django_authgroupex *.html
-recursive-include dev *.py *.css *.html
+recursive-include django_authgroupex_dev *.py *.css *.html
 
 include doc/Makefile doc/make.bat
 recursive-include doc *.py *.rst

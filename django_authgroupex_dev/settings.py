@@ -112,10 +112,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'dev.urls'
+ROOT_URLCONF = 'django_authgroupex_dev.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'dev.wsgi.application'
+WSGI_APPLICATION = 'django_authgroupex_dev.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -133,7 +133,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'django_authgroupex',
-    'dev.devsite',
+    'django_authgroupex_dev.devsite',
 )
 
 # A sample logging configuration. The only tangible logging
