@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import hashlib
-import urlparse
+
+import sys
+# handle changements from python2 to python3
+if sys.version_info[0] == 3:
+    import urllib.parse as urlparse
+else:
+    import urlparse
 
 from django.contrib.auth.models import User
 from django.contrib.sessions.middleware import SessionMiddleware
