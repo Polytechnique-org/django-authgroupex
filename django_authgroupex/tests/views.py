@@ -48,7 +48,7 @@ class AuthGroupeXViewsTestCase(TestCase):
         challenge = request.session['authgroupex-challenge']
         get_dict = dict(urlparse.parse_qsl(url[48:]))
         self.assertEquals(get_dict['challenge'], challenge)
-        self.assertEquals(get_dict['pass'], hashlib.md5(challenge + self.config.KEY).hexdigest())
+        self.assertEquals(get_dict['pass'], hashlib.md5((challenge + self.config.KEY).encode('ascii')).hexdigest())
         self.assertEquals(get_dict['url'], 'http://testserver/accounts/login/?auth_groupex_return=1')
 
     def testReturnView(self):

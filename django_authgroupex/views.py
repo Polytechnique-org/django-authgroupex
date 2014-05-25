@@ -7,6 +7,7 @@ from __future__ import absolute_import, unicode_literals
 
 import hashlib
 import random
+import struct
 
 from django import http
 from django.contrib import auth as django_auth
@@ -37,12 +38,12 @@ class URLFormatter(object):
             the new url.
         """
         challenge = hashlib.sha1(
-                b''.join(chr(random.randrange(0, 256)) for i in range(64)))
+                b''.join(struct.pack(b'B', random.randrange(0, 256)) for i in range(64)))
         challenge = challenge.hexdigest()
 
         request.session['authgroupex-challenge'] = challenge
 
-        sig = hashlib.md5(challenge + self.config.KEY).hexdigest()
+        sig = hashlib.md5((challenge + self.config.KEY).encode('ascii')).hexdigest()
         query = http.QueryDict('', mutable=True)
         query['challenge'] = challenge
         query['pass'] = sig
