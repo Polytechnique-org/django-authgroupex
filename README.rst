@@ -3,6 +3,8 @@ django-authgroupex
 
 This library provides a Django authentication backend based on Polytechnique.org's auth-groupe-x SSO protocol.
 
+.. image:: https://travis-ci.org/Polytechnique-org/django-authgroupex.svg?branch=master
+       :target: https://travis-ci.org/Polytechnique-org/django-authgroupex
 
 Setup
 =====
