@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import hashlib
+from __future__ import unicode_literals
 
+import hashlib
 import sys
+
 # handle changements from python2 to python3
-if sys.version_info[0] == 3:
-    import urllib.parse as urlparse
+if sys.version_info[0] <= 2:
+    import urlparse as urllib_parse
 else:
-    import urlparse
+    from urllib import parse as urllib_parse
+
 
 from django.contrib.auth.models import User
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -19,7 +22,7 @@ from django.test.utils import override_settings
 from django_authgroupex import conf as groupex_conf
 from django_authgroupex import views as groupex_views
 
-@override_settings(AUTHENTICATION_BACKENDS = ('django_authgroupex.auth.AuthGroupeXBackend',))
+@override_settings(AUTHENTICATION_BACKENDS=('django_authgroupex.auth.AuthGroupeXBackend',))
 class AuthGroupeXViewsTestCase(TestCase):
     def setUp(self):
         super(AuthGroupeXViewsTestCase, self).setUp()
@@ -35,7 +38,7 @@ class AuthGroupeXViewsTestCase(TestCase):
         request.session.save()
         return request
 
-    def testBeginView(self):
+    def test_begin_view(self):
         """Login view should redirect to polytechnique.org with appropriate GET arguments."""
         request = self._get_with_session('/accounts/login/')
         response = self.unique_view.login_view(request)
@@ -46,12 +49,12 @@ class AuthGroupeXViewsTestCase(TestCase):
         self.assertEqual(url[:48],"https://www.polytechnique.org/auth-groupex/utf8?")
         # check get data
         challenge = request.session['authgroupex-challenge']
-        get_dict = dict(urlparse.parse_qsl(url[48:]))
+        get_dict = dict(urllib_parse.parse_qsl(url[48:]))
         self.assertEquals(get_dict['challenge'], challenge)
         self.assertEquals(get_dict['pass'], hashlib.md5((challenge + self.config.KEY).encode('ascii')).hexdigest())
         self.assertEquals(get_dict['url'], 'http://testserver/accounts/login/?auth_groupex_return=1')
 
-    def testReturnView(self):
+    def test_return_view(self):
         """Return view should be handled properly and create a user."""
         # first, we need a request with a challenge
         begin_request = self._get_with_session('/accounts/login/')

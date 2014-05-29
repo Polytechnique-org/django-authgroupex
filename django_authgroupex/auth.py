@@ -235,7 +235,7 @@ class AuthGroupeXBackend(AuthGroupeXMixin):
     supports_object_permissions = False
 
     def __init__(self, config=None, *args, **kwargs):
-        super(AuthGroupeXBackend, self).__init__(config, *args, **kwargs)
+        super(AuthGroupeXBackend, self).__init__(config=config, *args, **kwargs)
         self.user_model = get_model(self.config.USER_MODEL)
 
     def get_user(self, user_id):
