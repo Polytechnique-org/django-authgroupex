@@ -5,10 +5,10 @@
 from __future__ import absolute_import, unicode_literals
 
 import hashlib
-import urllib
 
 from django import forms
 from django import http
+from django.utils.six.moves import urllib_parse
 
 from .. import conf
 
@@ -78,14 +78,14 @@ class EndPointForm(forms.Form):
         self.fields['pass'] = self.fields.pop('_pass')
 
     def clean_url(self):
-        return urllib.unquote(self.cleaned_data['url'])
+        return urllib_parse.unquote(self.cleaned_data['url'])
 
     def clean(self):
         config = conf.AuthGroupeXConf()
         challenge = self.cleaned_data['challenge']
         password = self.cleaned_data['pass']
 
-        expected_pass = hashlib.md5(challenge + config.KEY).hexdigest()
+        expected_pass = hashlib.md5((challenge + config.KEY).encode('ascii')).hexdigest()
 
         if expected_pass != password:
             raise forms.ValidationError("Expected signature %s, got %s" % (expected_pass, password))
