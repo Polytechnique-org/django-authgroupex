@@ -8,7 +8,15 @@ import hashlib
 
 from django import forms
 from django import http
-from django.utils.six.moves import urllib_parse
+from django.core.validators import RegexValidator
+
+# handle changements from python2 to python3
+import sys
+if sys.version_info[0] <= 2:
+    import urlparse as urllib_parse
+else:
+    from urllib import parse as urllib_parse
+
 
 from .. import conf
 
