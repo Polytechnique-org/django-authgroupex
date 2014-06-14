@@ -5,9 +5,11 @@ import sys
 import django
 from django.conf import settings
 
-
 if not settings.configured:
     settings.configure(
+        AUTHENTICATION_BACKENDS=(
+            'django_authgroupex.auth.AuthGroupeXBackend',
+        ),
         DATABASES={
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
@@ -17,14 +19,17 @@ if not settings.configured:
         INSTALLED_APPS=(
             'django.contrib.auth',
             'django.contrib.contenttypes',
+            'django.contrib.messages',
             'django.contrib.sessions',
             'django.contrib.sites',
             'django_authgroupex',
         ),
         SITE_ID=1,
         SECRET_KEY='this-is-just-for-tests-so-not-that-secret',
-        TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+        TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner',
+        AUTHGROUPEX_LOGIN_REDIRECT_URL='/login-success/'
     )
+
 
 
 from django.test.utils import get_runner
