@@ -43,9 +43,9 @@ class AuthGroupeXViewsTestCase(TestCase):
         request = self._get_with_session('/accounts/login/')
         response = self.unique_view.login_view(request)
         # check if redirection
-        self.assertIn('location', response._headers)
+        self.assertEqual(response.status_code, 302)
         # check validity of redirection
-        url = response._headers['location'][1]
+        url = response.get('Location')
         self.assertEqual(url[:48],"https://www.polytechnique.org/auth-groupex/utf8?")
         # check get data
         challenge = request.session['authgroupex-challenge']
