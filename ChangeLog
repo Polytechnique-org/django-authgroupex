@@ -1,3 +1,15 @@
+v0.4.0 (2014-06-14)
+
+*New:*
+
+    * Unit tests.
+    * Python 3 compatibility.
+
+*Bugfix:*
+
+    * Allow dots in fake username field.
+    * Various internal corrections.
+
 v0.3.2 (2013-11-25)
 -------------------
 
