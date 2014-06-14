@@ -27,7 +27,7 @@ class URLFormatter(object):
 
     def make_url(self, request, return_url=None):
         """Compute the remote URL.
-        
+
         Args:
             request: http.HttpRequest, the request to use for session storage
                 and current URL retrieving
@@ -110,8 +110,8 @@ class AuthGroupeXBaseView(object):
 
     def __init__(self, url_formatter=None, config=None, *args, **kwargs):
         super(AuthGroupeXBaseView, self).__init__(*args, **kwargs)
-        self.url_formatter = url_formatter or URLFormatter()
         self.config = config or conf.AuthGroupeXConf()
+        self.url_formatter = url_formatter or URLFormatter(self.config)
         self.include_return_param = False
 
     # We need to redefine builtin 'next'
