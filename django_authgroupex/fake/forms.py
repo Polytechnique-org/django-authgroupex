@@ -4,6 +4,7 @@
 
 from __future__ import absolute_import, unicode_literals
 
+import re
 import hashlib
 
 from django import forms
@@ -32,8 +33,12 @@ GROUP_AUTH_CHOICES = (
 )
 
 
+
+validate_hruid = RegexValidator(re.compile(r'^[-\w.]+$'),
+    u"Enter a valid hruid containing only letters, numbers, dots ans hyphens", 'invalid')
+
 DEFAULT_FIELDS = {
-    'username': forms.SlugField(label="Username", required=False),
+    'username': forms.CharField(label="Username", required=False, validators=[validate_hruid]),
     'firstname': forms.CharField(label="First name", required=False),
     'lastname': forms.CharField(label="Last name", required=False),
     'perms': forms.ChoiceField(choices=PERM_CHOICES, label="Permissions", required=False),
