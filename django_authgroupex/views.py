@@ -48,6 +48,8 @@ class URLFormatter(object):
         query['challenge'] = challenge
         query['pass'] = sig
         query['url'] = request.build_absolute_uri(return_url)
+        if self.config.GROUP:
+            query['group'] = self.config.GROUP
 
         endpoint = self.config.ENDPOINT
         if self.config.FAKE:
