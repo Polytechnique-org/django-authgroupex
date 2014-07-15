@@ -58,7 +58,8 @@ class AuthGroupeXConf(appconf.AppConf):
     # Group to store groups to
     GROUP_MODEL = 'auth.Group'
 
-    # Whether to enable debug
-    FAKE = False
+    # Whether to enable the fake endpoint for debugging purpose
+    # True means "always", False "never" and None "only when DEBUG is active"
+    FAKE = None
     def configure_fake(self, value):
-        return value or settings.DEBUG
+        return settings.DEBUG if value is None else value
