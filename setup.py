@@ -3,6 +3,7 @@
 # This code is distributed under the two-clause BSD license.
 # Copyright (c) 2012-2013 Raphaël Barrois
 
+import codecs
 import os
 import re
 import sys
@@ -16,7 +17,7 @@ def get_version(*module_dir_components):
     version_re = re.compile(r"^__version__ = ['\"](.*)['\"]$")
     module_root = os.path.join(root, *module_dir_components)
     module_init = os.path.join(module_root, '__init__.py')
-    with open(module_init, 'r') as f:
+    with codecs.open(module_init, 'r', 'utf-8') as f:
         for line in f:
             match = version_re.match(line[:-1])
             if match:
