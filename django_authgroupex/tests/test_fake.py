@@ -51,7 +51,7 @@ class AuthGroupeXFakeTestCase(TestCase):
         # test endpoint
         remote_url = response.get('location')
         response = fake_views.endpoint(self._apply_middlewares(self.factory.get(remote_url)))
-        self.assertEquals(response.status_code, 302)
+        self.assertEqual(response.status_code, 302)
 
         # posting fake data
         post_data = {
@@ -62,17 +62,17 @@ class AuthGroupeXFakeTestCase(TestCase):
         }
         request = self._apply_middlewares(self.factory.post(remote_url, post_data))
         response = fake_views.login_view(request)
-        self.assertEquals(response.status_code, 302)
+        self.assertEqual(response.status_code, 302)
 
         # make sure fake data creates the correct user
         redirect_url = response._headers['location'][1]
         request = self._apply_middlewares(self.factory.get(redirect_url))
         request.session['authgroupex-challenge'] = challenge
         response = self.unique_view.login_view(request)
-        self.assertEquals(response.status_code, 302)
-        self.assertEquals(response.get('Location'), self.config.LOGIN_REDIRECT_URL)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.get('Location'), self.config.LOGIN_REDIRECT_URL)
 
         user = User.objects.get(username='jean.michel.2008')
-        self.assertEquals(user.first_name, 'Jean')
-        self.assertEquals(user.last_name, 'Michel')
-        self.assertEquals(user.email, 'jean.michel@polytechnique.org')
+        self.assertEqual(user.first_name, 'Jean')
+        self.assertEqual(user.last_name, 'Michel')
+        self.assertEqual(user.email, 'jean.michel@polytechnique.org')

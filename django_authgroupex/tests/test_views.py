@@ -46,13 +46,13 @@ class AuthGroupeXViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         # check validity of redirection
         url = response.get('Location')
-        self.assertEqual(url[:48],"https://www.polytechnique.org/auth-groupex/utf8?")
+        self.assertEqual(url[:48], 'https://www.polytechnique.org/auth-groupex/utf8?')
         # check get data
         challenge = request.session['authgroupex-challenge']
         get_dict = dict(urllib_parse.parse_qsl(url[48:]))
-        self.assertEquals(get_dict['challenge'], challenge)
-        self.assertEquals(get_dict['pass'], hashlib.md5((challenge + self.config.KEY).encode('ascii')).hexdigest())
-        self.assertEquals(get_dict['url'], 'http://testserver/accounts/login/?auth_groupex_return=1')
+        self.assertEqual(get_dict['challenge'], challenge)
+        self.assertEqual(get_dict['pass'], hashlib.md5((challenge + self.config.KEY).encode('ascii')).hexdigest())
+        self.assertEqual(get_dict['url'], 'http://testserver/accounts/login/?auth_groupex_return=1')
 
     def test_return_view(self):
         """Return view should be handled properly and create a user."""
@@ -72,7 +72,7 @@ class AuthGroupeXViewsTestCase(TestCase):
         request.session['authgroupex-challenge'] = challenge
         response = self.unique_view.login_view(request)
         # check status code
-        self.assertEquals(response.status_code, 302)
+        self.assertEqual(response.status_code, 302)
         # check the user is indeed authenticated
         AuthenticationMiddleware().process_request(request)
-        self.assertEquals(request.user, User.objects.get(username='paul.dupond.2011'))
+        self.assertEqual(request.user, User.objects.get(username='paul.dupond.2011'))
