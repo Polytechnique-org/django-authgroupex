@@ -4,8 +4,8 @@
 *.pyo
 
 # Dev-related files
-dev/db.sqlite
-dev/private/
+django_authgroupex_dev/db.sqlite3
+django_authgroupex_dev/private/
 
 # Build-related files
 doc/_build/
