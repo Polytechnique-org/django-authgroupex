@@ -27,7 +27,8 @@ if not settings.configured:
         SITE_ID=1,
         SECRET_KEY='this-is-just-for-tests-so-not-that-secret',
         TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner',
-        AUTHGROUPEX_LOGIN_REDIRECT_URL='/login-success/'
+        AUTHGROUPEX_LOGIN_REDIRECT_URL='/login-success/',
+        MIDDLEWARE_CLASSES=()
     )
 
 
