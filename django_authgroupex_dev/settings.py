@@ -97,7 +97,7 @@ AUTHENTICATION_BACKENDS = (
     'django_authgroupex.auth.AuthGroupeXBackend',
 )
 AUTHGROUPEX_KEY = read_pass('authgroupex.key')
-AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'perms')
+AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'email', 'perms')
 AUTHGROUPEX_SUPERADMIN_PERMS = ('admin',)
 AUTHGROUPEX_FAKE = True
 AUTHGROUPEX_ENDPOINT = 'authgroupex:fake_endpoint'
