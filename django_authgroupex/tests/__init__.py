@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .auth import *
-from .fake import *
-from .views import *
+from .test_auth import *
+from .test_fake import *
+from .test_views import *
