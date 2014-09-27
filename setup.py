@@ -35,7 +35,7 @@ setup(
     description="An authentication backend for Django based on Polytechnique.org's auth-groupe-x SSO protocol.",
     author="Raphaël Barrois",
     author_email="raphael.barrois+djauthgroupex@polytechnique.org",
-    url='http://github.com/rbarrois/django-authgroupex',
+    url='https://github.com/Polytechnique-org/django-authgroupex',
     download_url='http://pypi.python.org/pypi/django-authgroupex/',
     keywords=['sso', 'authentication', 'django', 'authgroupex'],
     packages=['django_authgroupex', 'django_authgroupex.fake'],
@@ -65,4 +65,3 @@ setup(
     ],
     test_suite = "runtests.runtests",
 )
-
