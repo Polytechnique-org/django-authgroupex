@@ -27,7 +27,12 @@ class AuthGroupeXViewsTestCase(TestCase):
     def setUp(self):
         super(AuthGroupeXViewsTestCase, self).setUp()
         self.config = groupex_conf.AuthGroupeXConf()
-        self.unique_view = groupex_views.AuthGroupeXUniqueView()
+        # Make sure the fake endpoint is disabled in config
+        self.config.FAKE = False
+        self.config.ENDPOINT = 'https://www.polytechnique.org/auth-groupex/utf8'
+        self.config.RETURN_URL = '/accounts/login/'
+        self.config.FIELDS = ('username', 'firstname', 'lastname', 'email')
+        self.unique_view = groupex_views.AuthGroupeXUniqueView(config=self.config)
         # factory needed by all tests
         self.factory = RequestFactory()
 
