@@ -16,4 +16,21 @@
     </table>
 </form>
 
+{% if preset_accounts %}
+    <p>Or choose among the preset accounts:</p>
+    <ul>
+        {% for account in preset_accounts %}
+            <li>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for key, val in account.items %}
+                        <input type="hidden" name="{{ key }}" value="{{ val }}" />
+                    {% endfor %}
+                    <input type="submit" value="{% firstof account.displayname account.username account.email %}" />
+                    (perms = {{ account.perms }})
+                </form>
+            </li>
+       {% endfor %}
+    </ul>
+{% endif %}
 {% endblock content %}

@@ -104,6 +104,24 @@ AUTHGROUPEX_ENDPOINT = 'authgroupex:fake_endpoint'
 LOGIN_URL = '/xorgauth/'
 LOGIN_REDIRECT_URL = '/'
 
+AUTHGROUPEX_FAKE_ACCOUNTS = (
+    {
+        'username': 'admin.istrateur.1942',
+        'firstname': 'Admin',
+        'lastname': 'Istrateur',
+        'email': 'admin.istrateur.1942@polytechnique.org',
+        'perms': 'admin',
+    },
+    {
+        'displayname': 'Jean Dupont (user)',
+        'username': 'jean.dupont.1901',
+        'firstname': 'Jean',
+        'lastname': 'Dupont',
+        'email': 'jean.dupont.1901@polytechnique.org',
+        'perms': 'user',
+    },
+)
+
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (

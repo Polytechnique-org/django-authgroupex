@@ -151,3 +151,19 @@ The ``AUTHGROUPEX_FAKE`` setting will enable two views for handling fake request
   select their preferred response.
 
 The ``AUTHGROUPEX_ENDPOINT`` setting should include the namespace at which ``django_authgroupex.urls`` was inserted.
+
+It is also possible to add preset accounts for the fake endpoint, with ``AUTHGROUPEX_FAKE_ACCOUNTS``.
+This variable is a tuple of dicts defining the values for each field of ``AUTHGROUPEX_FIELDS``.
+An extra optional field, ``displayname``, is available to give a "name" for the preset account.
+If ``displayname`` is not set, ``username`` is used to refer to the account.
+
+    AUTHGROUPEX_FAKE_ACCOUNTS = (
+        {
+            'displayname': 'Jean Dupont (utilisateur)',
+            'username': 'jean.dupont.1901',
+            'firstname': 'Jean',
+            'lastname': 'Dupont',
+            'email': 'jean.dupont.1901@polytechnique.org',
+            'perms': 'user',
+        },
+    )

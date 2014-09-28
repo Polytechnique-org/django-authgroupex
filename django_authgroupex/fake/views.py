@@ -53,5 +53,8 @@ def login_view(request):
         separator = '&' if '?' in reply_url else '?'
         messages.success(request, u"Redirecting to %s with a signed request." % reply_url)
         return redirect(reply_url + separator + reply_querystring)
-    else:
-        return render(request, 'authgroupex/fake_fill.html', {'form': form})
+
+    return render(request, 'authgroupex/fake_fill.html', {
+        'form': form,
+        'preset_accounts': config.FAKE_ACCOUNTS,
+    })

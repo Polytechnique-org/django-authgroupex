@@ -63,3 +63,6 @@ class AuthGroupeXConf(appconf.AppConf):
     FAKE = None
     def configure_fake(self, value):
         return settings.DEBUG if value is None else value
+
+    # Preset accounts for the fake endpoint
+    FAKE_ACCOUNTS = ()
