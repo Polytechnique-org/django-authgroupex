@@ -97,28 +97,57 @@ AUTHENTICATION_BACKENDS = (
     'django_authgroupex.auth.AuthGroupeXBackend',
 )
 AUTHGROUPEX_KEY = read_pass('authgroupex.key')
-AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'email', 'perms')
-AUTHGROUPEX_SUPERADMIN_PERMS = ('admin',)
+AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'email', 'promo', 'perms', 'grpauth')
 AUTHGROUPEX_FAKE = True
 AUTHGROUPEX_ENDPOINT = 'authgroupex:fake_endpoint'
 LOGIN_URL = '/xorgauth/'
 LOGIN_REDIRECT_URL = '/'
 
+# When using a site dedicated to a group, make the members "staff" and the admins "admin"
+AUTHGROUPEX_GROUP = 'Polytechnique.org'
+AUTHGROUPEX_SUPERADMIN_PERMS = ('admin', 'grpadmin')
+AUTHGROUPEX_STAFF_PERMS = ('grpmember',)
+
 AUTHGROUPEX_FAKE_ACCOUNTS = (
     {
+        'displayname': 'Admin Istrateur (global admin)',
         'username': 'admin.istrateur.1942',
         'firstname': 'Admin',
         'lastname': 'Istrateur',
         'email': 'admin.istrateur.1942@polytechnique.org',
+        'promo': '1942',
         'perms': 'admin',
+        'grpauth': '',
     },
     {
-        'displayname': 'Jean Dupont (user)',
-        'username': 'jean.dupont.1901',
-        'firstname': 'Jean',
-        'lastname': 'Dupont',
-        'email': 'jean.dupont.1901@polytechnique.org',
+        'displayname': 'Presi Dent (group admin)',
+        'username': 'presi.dent.1901',
+        'firstname': 'Presi',
+        'lastname': 'Dent',
+        'email': 'presi.dent.1901@polytechnique.org',
+        'promo': '1901',
         'perms': 'user',
+        'grpauth': 'admin',
+    },
+    {
+        'displayname': 'Mem Ber (group member)',
+        'username': 'mem.ber.1902',
+        'firstname': 'Mem',
+        'lastname': 'Ber',
+        'email': 'mem.ber.1902@polytechnique.org',
+        'promo': '1902',
+        'perms': 'user',
+        'grpauth': 'membre',
+    },
+    {
+        'displayname': 'Lambda User (not admin, not group member)',
+        'username': 'lambda.user.1922',
+        'firstname': 'Lambda',
+        'lastname': 'User',
+        'email': 'mem.ber.1922@polytechnique.org',
+        'promo': '1922',
+        'perms': 'user',
+        'grpauth': '',
     },
 )
 
