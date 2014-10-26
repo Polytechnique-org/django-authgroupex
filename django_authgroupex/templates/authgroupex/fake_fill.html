@@ -27,7 +27,7 @@
                         <input type="hidden" name="{{ key }}" value="{{ val }}" />
                     {% endfor %}
                     <input type="submit" value="{% firstof account.displayname account.username account.email %}" />
-                    (perms = {{ account.perms }})
+                    (perms = {{ account.perms }}{% if account.grpauth %}, grpauth = {{ account.grpauth }}{% endif %})
                 </form>
             </li>
        {% endfor %}
