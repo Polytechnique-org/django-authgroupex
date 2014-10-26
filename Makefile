@@ -1,4 +1,4 @@
-default: runserver
+default: run
 
 
 PACKAGE = django_authgroupex
@@ -14,7 +14,12 @@ test:
 dist:
 	python setup.py sdist
 
-
 clean:
 	find . -name '*.pyc' -delete
-	rm -rf dist $(PACKAGE).egg-info
+	rm -rf build dist $(PACKAGE).egg-info
+
+resetdb:
+	rm -f django_authgroupex_dev/db.sqlite3
+	$(MANAGE_PY) migrate --noinput
+
+.PHONY: default run test dist clean resetdb
