@@ -92,7 +92,7 @@ class URLFormatter(object):
             raise exceptions.InvalidAuth(
                     "Invalid signature in authgroupex response.")
 
-        return auth.AuthResult(success=True, data=data)
+        return auth.AuthResult(data=data)
 
 
 # Expected behaviour:

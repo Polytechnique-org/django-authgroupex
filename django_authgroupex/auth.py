@@ -52,19 +52,12 @@ def get_model(model_name):
 class AuthResult(object):
     """Result of an authentication query."""
 
-    def __init__(self, success, data=None):
-        if not data:
-            data = {}
-        self.success = success
-        self.data = data
+    def __init__(self, data):
+        self.data = data or {}
         self.perms = self._setup_perms(self.data)
 
     def __repr__(self):
-        return '<AuthResult: %s [%s / %s]>' % (
-            'OK' if self.success else 'KO',
-            self.data,
-            self.perms,
-        )
+        return '<AuthResult: [%s / %s]>' % (self.data, self.perms)
 
     def _setup_perms(self, data):
         perms = set()

@@ -38,7 +38,7 @@ class AuthGroupeXBackendTestCase(TestCase):
             'promo': 1985,
             'email': 'aurelie.dupond@polytechnique.org',
         }
-        auth_result = groupex_auth.AuthResult(success=True, data=auth_data)
+        auth_result = groupex_auth.AuthResult(auth_data)
         user = self.backend.authenticate(authgroupex=auth_result)
         self.assertIsNotNone(user)
 
@@ -58,7 +58,7 @@ class AuthGroupeXBackendTestCase(TestCase):
             'promo': 1986,
             'email': 'jean.marcel@polytechnique.org',
         }
-        auth_result = groupex_auth.AuthResult(success=True, data=auth_data)
+        auth_result = groupex_auth.AuthResult(auth_data)
         user1 = self.backend.authenticate(authgroupex=auth_result)
         user2 = self.backend.authenticate(authgroupex=auth_result)
         self.assertEqual(user1, user2)
@@ -72,7 +72,7 @@ class AuthGroupeXBackendTestCase(TestCase):
             'promo': 2000,
             'email': 'no.group@polytechnique.org',
         }
-        auth_result = groupex_auth.AuthResult(success=True, data=auth_data)
+        auth_result = groupex_auth.AuthResult(auth_data)
         user = self.backend.authenticate(authgroupex=auth_result)
         self.assertNotIn(self.group_members, user.groups.all())
         self.assertNotIn(self.group_admins, user.groups.all())
@@ -87,7 +87,7 @@ class AuthGroupeXBackendTestCase(TestCase):
             'email': 'member.group@polytechnique.org',
             'grpauth': 'membre',
         }
-        auth_result = groupex_auth.AuthResult(success=True, data=auth_data)
+        auth_result = groupex_auth.AuthResult(auth_data)
         user = self.backend.authenticate(authgroupex=auth_result)
         self.assertIn(self.group_members, user.groups.all())
         self.assertNotIn(self.group_admins, user.groups.all())
@@ -102,7 +102,7 @@ class AuthGroupeXBackendTestCase(TestCase):
             'email': 'admin.group@polytechnique.org',
             'grpauth': 'admin',
         }
-        auth_result = groupex_auth.AuthResult(success=True, data=auth_data)
+        auth_result = groupex_auth.AuthResult(auth_data)
         user = self.backend.authenticate(authgroupex=auth_result)
         self.assertIn(self.group_members, user.groups.all())
         self.assertIn(self.group_admins, user.groups.all())
