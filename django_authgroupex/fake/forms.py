@@ -28,8 +28,8 @@ PERM_CHOICES = (
 )
 
 GROUP_AUTH_CHOICES = (
-    ('grpmember', "Group member"),
-    ('grpadmin', "Group admin"),
+    ('membre', "Group member"),
+    ('admin', "Group admin"),
 )
 
 
