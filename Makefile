@@ -1,9 +1,10 @@
 default: run
 
-
 PACKAGE = django_authgroupex
 MANAGE_PY = python manage.py
 
+# Use current python binary instead of system default.
+COVERAGE = python $(shell which coverage)
 
 run:
 	$(MANAGE_PY) runserver
@@ -22,4 +23,10 @@ resetdb:
 	rm -f django_authgroupex_dev/db.sqlite3
 	$(MANAGE_PY) migrate --noinput
 
-.PHONY: default run test dist clean resetdb
+coverage:
+	$(COVERAGE) erase
+	$(COVERAGE) run "--include=$(PACKAGE)/*.py" --branch setup.py test
+	$(COVERAGE) report "--include=$(PACKAGE)/*.py"
+	$(COVERAGE) html "--include=$(PACKAGE)/*.py"
+
+.PHONY: default run test dist clean resetdb coverage
