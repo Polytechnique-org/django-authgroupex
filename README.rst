@@ -125,6 +125,35 @@ If :meth:`~django_authgroupex.views.AuthGroupeXBaseView.login_begin_view` and
 ``AUTHGROUPEX_RETURN_URL`` **must** point to ``login_return_view``.
 
 
+Examples
+--------
+
+Here are several real usecases of websites using django-authgroupex.
+
+* For a website managed by the admininstrators of the login provider (Polytechnique.org),
+  ``PERM_ADMINS`` needs to be mapped to ``user.is_superuser`` and ``user.is_staff`` is
+  meaningless.  The settings may contain::
+
+    AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'email', 'perms')
+    AUTHGROUPEX_SUPERADMIN_PERMS = ('admin',)
+
+* A website managed by a specific group, let's say "MyGroup", can use ``user.is_staff``
+  for the members and ``user.is_superuser`` for the admins of the group::
+
+    AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'email', 'grpauth')
+    AUTHGROUPEX_GROUP = 'MyGroup'
+    AUTHGROUPEX_SUPERADMIN_PERMS = ('grpadmin',)
+    AUTHGROUPEX_STAFF_PERMS = ('grpmember',)
+
+* It is of course possible to mix the above usecases, for example to set ``user.is_superuser``
+  for administrators::
+
+    AUTHGROUPEX_FIELDS = ('username', 'firstname', 'lastname', 'email', 'perms', 'grpauth')
+    AUTHGROUPEX_GROUP = 'MyGroup'
+    AUTHGROUPEX_SUPERADMIN_PERMS = ('admin', 'grpadmin')
+    AUTHGROUPEX_STAFF_PERMS = ('grpmember',)
+
+
 Testing
 =======
 
@@ -156,6 +185,8 @@ It is also possible to add preset accounts for the fake endpoint, with ``AUTHGRO
 This variable is a tuple of dicts defining the values for each field of ``AUTHGROUPEX_FIELDS``.
 An extra optional field, ``displayname``, is available to give a "name" for the preset account.
 If ``displayname`` is not set, ``username`` is used to refer to the account.
+
+::
 
     AUTHGROUPEX_FAKE_ACCOUNTS = (
         {
