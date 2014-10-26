@@ -81,7 +81,8 @@ class URLFormatter(object):
 
         for field in self.config.FIELDS:
             if field not in request.GET:
-                return auth.AuthResult(success=False)
+                raise exceptions.InvalidAuth(
+                    "request.GET lacks a '{}' field.".format(field))
             data[field] = request.GET[field]
             check_str += data[field]
 
