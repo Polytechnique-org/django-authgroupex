@@ -83,6 +83,8 @@ class EndPointForm(forms.Form):
     url = forms.CharField(max_length=600, widget=long_text, help_text="The return URL")
     challenge = forms.CharField(max_length=64, widget=long_text,
             help_text="A random challenge, crafted specifically for this request")
+    group = forms.CharField(max_length=64, widget=long_text, required=False,
+            help_text="Name of a 'GroupeX'")
     _pass = forms.CharField(max_length=64, widget=long_text,
             help_text="Signature : md5(challenge + private_key)")
 
@@ -108,9 +110,12 @@ class EndPointForm(forms.Form):
         """Build the query part for the 'next' URL."""
         url = self.cleaned_data['url']
         challenge = self.cleaned_data['challenge']
+        group = self.cleaned_data['group']
 
         query = http.QueryDict('', mutable=True)
         query['challenge'] = challenge
         query['url'] = url
+        if group:
+            query['group'] = group
 
         return query.urlencode()

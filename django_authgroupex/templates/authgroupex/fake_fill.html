@@ -4,6 +4,10 @@
 
 <h2>Fill in the chosen values.</h2>
 
+{% if get_group %}
+The request is being made for group {{ get_group }}.
+{% endif %}
+
 <form method="post">
     {% csrf_token %}
     <table>

@@ -45,6 +45,7 @@ def endpoint(request):
 
 
 def login_view(request):
+    """Fill a form with authentication data and send a reply if valid"""
     form = forms.LoginForm(data=request.POST or None, fields=config.FIELDS)
 
     if form.is_valid():
@@ -57,4 +58,5 @@ def login_view(request):
     return render(request, 'authgroupex/fake_fill.html', {
         'form': form,
         'preset_accounts': config.FAKE_ACCOUNTS,
+        'get_group': request.GET.get('group'),
     })
