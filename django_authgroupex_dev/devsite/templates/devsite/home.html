@@ -5,6 +5,46 @@
 {% if user.is_authenticated %}
     <h3>Welcome, {{ user.get_full_name }}</h3>
     <p><a href="{% url 'logout' %}">Log out </a></p>
+    <table border="1">
+        <tr>
+              <th colspan="2">Account fields</th>
+              <th>Description</th>
+        </tr>
+        <tr>
+            <td>username</td>
+            <td>{{ user.username }}</td>
+            <td>Forlife identifier</td>
+        </tr>
+        <tr>
+            <td>first_name</td>
+            <td>{{ user.first_name }}</td>
+            <td>First name</td>
+        </tr>
+            <td>last_name</td>
+            <td>{{ user.last_name }}</td>
+            <td>Last name</td>
+        </tr>
+        </tr>
+            <td>email</td>
+            <td>{{ user.email }}</td>
+            <td>Email address</td>
+        </tr>
+        </tr>
+            <td>is_superuser</td>
+            <td>{% if user.is_superuser %}True{% else %}False{% endif %}</td>
+            <td>Global admin</td>
+        </tr>
+        </tr>
+            <td>is_staff</td>
+            <td>{% if user.is_staff %}True{% else %}False{% endif %}</td>
+            <td>Group admin</td>
+        </tr>
+        </tr>
+            <td>is_active</td>
+            <td>{% if user.is_active %}True{% else %}False{% endif %}</td>
+            <td>Alive</td>
+        </tr>
+    </table>
 {% else %}
     <h3>Authenticate</h3>
         <p><a href="{% url 'authgroupex:login' %}?next=/" />Connect through X.org</a></p>
