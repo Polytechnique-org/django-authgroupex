@@ -29,7 +29,7 @@ class AuthGroupeXConf(appconf.AppConf):
 
     # Redirection URL post-authgroupex if no next= view was set.
     LOGIN_REDIRECT_URL = ''
-    def config_login_redirect_url(self, value):
+    def configure_login_redirect_url(self, value):
         return value or settings.LOGIN_REDIRECT_URL
 
     # Fields to fetch from remote; order matters.
