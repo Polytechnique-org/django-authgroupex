@@ -279,10 +279,11 @@ class AuthGroupeXBackend(AuthGroupeXMixin):
             profile.save()
 
     def _update_groups(self, user, auth_data):
+        """Update django groups of the user according to auth-groupe-x data"""
         if not self.config.MAP_GROUPS:
             return
 
-        group_model = get_model(self.config.GROUP_MODEL)
+        # Gather names of django groups by mapping perms using MAP_GROUPS
         new_group_names = set()
         old_group_names = set()
         for perm in PERM_LEVELS:
@@ -291,6 +292,8 @@ class AuthGroupeXBackend(AuthGroupeXMixin):
             else:
                 old_group_names |= set(self.config.MAP_GROUPS.get(perm, []))
 
+        # Find django group objects
+        group_model = get_model(self.config.GROUP_MODEL)
         new_groups = list(group_model.objects.filter(name__in=new_group_names))
         old_groups = list(group_model.objects.filter(name__in=old_group_names))
 
