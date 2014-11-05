@@ -57,7 +57,7 @@ Connection
 * ``AUTHGROUPEX_KEY``: **Required**, the secret key used to connect to an AuthGroupeX-compatible server.
 
 * ``AUTHGROUPEX_ENDPOINT``: The remote endpoint (an AuthGroupeX-compatible server).
-  Default: `https://www.polytechnique.org/auth-groupe-x/utf8`
+  Default: `https://www.polytechnique.org/auth-groupex/utf8`
 * ``AUTHGROUPEX_FIELDS``: The list of profile fields to require upon connection; order matters.
   Default: ``('username', 'firstname', 'lastname', 'email')``
 
