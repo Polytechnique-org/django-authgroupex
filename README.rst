@@ -190,10 +190,10 @@ If ``displayname`` is not set, ``username`` is used to refer to the account.
 
     AUTHGROUPEX_FAKE_ACCOUNTS = (
         {
-            'displayname': 'Jean Dupont (utilisateur)',
+            'displayname': "Jean Dupont (utilisateur)",
             'username': 'jean.dupont.1901',
-            'firstname': 'Jean',
-            'lastname': 'Dupont',
+            'firstname': "Jean",
+            'lastname': "Dupont",
             'email': 'jean.dupont.1901@polytechnique.org',
             'perms': 'user',
         },
