@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>Fill in the chosen values.</h2>
+<h2>{% trans "Fill in the chosen values." %}</h2>
 
 {% if get_group %}
-The request is being made for group {{ get_group }}.
+{% blocktrans %}The request is being made for group {{ get_group }}.{% endblocktrans M}
 {% endif %}
 
 <form method="post">
@@ -21,7 +22,7 @@ The request is being made for group {{ get_group }}.
 </form>
 
 {% if preset_accounts %}
-    <p>Or choose among the preset accounts:</p>
+    <p>{% trans "Or choose among the preset accounts:" %}</p>
     <ul>
         {% for account in preset_accounts %}
             <li>
